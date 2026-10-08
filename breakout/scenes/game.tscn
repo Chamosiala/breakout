@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://ke2hp3sfwf4"]
 
 [ext_resource type="PackedScene" uid="uid://idqg1t52of46" path="res://breakout/scenes/player.tscn" id="1_jtfpr"]
+[ext_resource type="Script" uid="uid://dlvfbarxg5hqf" path="res://breakout/scenes/game.gd" id="1_qyk80"]
 [ext_resource type="Script" uid="uid://21cbbixcydqa" path="res://breakout/scenes/player.gd" id="2_xej31"]
-[ext_resource type="Script" uid="uid://canh22kccf2s1" path="res://breakout/scenes/ball.gd" id="3_0a2v5"]
-[ext_resource type="Texture2D" uid="uid://crli8lkut51ap" path="res://breakout/assets/Ball.png" id="3_s2fnt"]
+[ext_resource type="PackedScene" uid="uid://c6x2ib32w3pmd" path="res://breakout/scenes/ball.tscn" id="4_qyk80"]
+[ext_resource type="PackedScene" uid="uid://cw3ccjna5alap" path="res://breakout/scenes/brick.tscn" id="5_0a3k7"]
+[ext_resource type="Script" uid="uid://b2lynkkjrngpr" path="res://breakout/scenes/floor.gd" id="7_6yit2"]
 
 [sub_resource type="Gradient" id="Gradient_jtfpr"]
 offsets = PackedFloat32Array(0.6888889, 0.9222222, 1)
@@ -18,17 +20,14 @@ normal = Vector2(1, 0)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xej31"]
 normal = Vector2(-1, 0)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1lldk"]
-friction = 0.0
-bounce = 1.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_4miue"]
-radius = 15.0
-
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_byoqh"]
 normal = Vector2(0, 1)
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xu7wj"]
+distance = -50.0
+
 [node name="Game" type="Node2D" unique_id=465889652]
+script = ExtResource("1_qyk80")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=618462415]
 position = Vector2(324, 576)
@@ -63,21 +62,8 @@ collision_layer = 3
 position = Vector2(-504, 439)
 shape = SubResource("WorldBoundaryShape2D_xej31")
 
-[node name="Ball" type="RigidBody2D" parent="." unique_id=1844349002]
+[node name="Ball" parent="." unique_id=401352303 instance=ExtResource("4_qyk80")]
 position = Vector2(324, 576)
-physics_material_override = SubResource("PhysicsMaterial_1lldk")
-gravity_scale = 0.0
-contact_monitor = true
-max_contacts_reported = 1
-linear_damp_mode = 1
-angular_damp_mode = 1
-script = ExtResource("3_0a2v5")
-
-[node name="Sprite2D" type="Sprite2D" parent="Ball" unique_id=235032496]
-texture = ExtResource("3_s2fnt")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=1631794177]
-shape = SubResource("CircleShape2D_4miue")
 
 [node name="Ceiling" type="StaticBody2D" parent="." unique_id=574491316]
 position = Vector2(527, 0)
@@ -86,4 +72,46 @@ collision_layer = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling" unique_id=426018250]
 shape = SubResource("WorldBoundaryShape2D_byoqh")
 
-[connection signal="body_entered" from="Ball" to="Ball" method="_on_body_entered"]
+[node name="BrickGroup" type="Node" parent="." unique_id=719384844]
+
+[node name="Brick" parent="BrickGroup" unique_id=1542892490 instance=ExtResource("5_0a3k7")]
+position = Vector2(172, 96)
+
+[node name="Brick4" parent="BrickGroup" unique_id=932067942 instance=ExtResource("5_0a3k7")]
+position = Vector2(569, 96)
+
+[node name="Brick3" parent="BrickGroup" unique_id=1566662390 instance=ExtResource("5_0a3k7")]
+position = Vector2(431, 96)
+
+[node name="Brick2" parent="BrickGroup" unique_id=1753592927 instance=ExtResource("5_0a3k7")]
+position = Vector2(304, 96)
+
+[node name="Brick5" parent="BrickGroup" unique_id=193514268 instance=ExtResource("5_0a3k7")]
+position = Vector2(53, 97)
+
+[node name="Score_Label" type="Label" parent="." unique_id=1045275232]
+offset_left = 283.0
+offset_top = 497.0
+offset_right = 438.0
+offset_bottom = 539.0
+theme_override_font_sizes/font_size = 30
+text = "Start"
+
+[node name="Floor" type="Area2D" parent="." unique_id=259183223]
+position = Vector2(315, 1152)
+script = ExtResource("7_6yit2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=359230225]
+position = Vector2(1, -2)
+shape = SubResource("WorldBoundaryShape2D_xu7wj")
+
+[node name="Life_Label" type="Label" parent="." unique_id=104378683]
+offset_left = 291.0
+offset_top = 447.0
+offset_right = 331.0
+offset_bottom = 470.0
+theme_override_font_sizes/font_size = 26
+
+[connection signal="brick_broken" from="Ball" to="." method="_on_ball_brick_broken"]
+[connection signal="ball_lost" from="Floor" to="." method="_on_floor_ball_lost"]
+[connection signal="body_entered" from="Floor" to="Floor" method="_on_body_entered"]
