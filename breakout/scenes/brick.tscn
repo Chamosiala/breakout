@@ -2,19 +2,19 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xu7wj"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xu7wj"]
-width = 100
-height = 30
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xu7wj"]
-size = Vector2(100.5, 31)
+size = Vector2(74, 20)
 
 [node name="Brick" type="StaticBody2D" unique_id=1542892490]
 physics_material_override = SubResource("PhysicsMaterial_xu7wj")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=761322142]
-texture = SubResource("NoiseTexture2D_xu7wj")
+[node name="ColorRect" type="ColorRect" parent="." unique_id=537047212]
+offset_left = -20.0
+offset_top = -5.0
+offset_right = 54.0
+offset_bottom = 15.0
+color = Color(1, 0, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1835538794]
-position = Vector2(-0.25, 0)
+position = Vector2(17, 5)
 shape = SubResource("RectangleShape2D_xu7wj")

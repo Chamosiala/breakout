@@ -1,6 +1,6 @@
 extends RigidBody2D
-@onready var brick_group: Node = $"../BrickGroup"
 @onready var player: CharacterBody2D = $"../Player"
+@onready var bricks: Node = $"../Bricks"
 
 const initial_speed = 500
 
@@ -18,10 +18,12 @@ func speed_change() -> void:
 	max_y_speed *= 1.05
 	
 func _on_body_entered(body: Node) -> void:
-	if body in brick_group.get_children():
-		body.queue_free()
-		speed_change()
-		brick_broken.emit()
+	print(bricks.get_children())
+	for brickGroup in bricks.get_children():
+		if body in brickGroup.get_children():
+			body.queue_free()
+			speed_change()
+			brick_broken.emit()
 	if body.name == "Player":
 		#TODO: do better next time
 		print(linear_velocity.y)
