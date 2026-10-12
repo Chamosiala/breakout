@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dtw8qxrhusfaa"]
+
+[ext_resource type="Texture2D" uid="uid://dv2nat5hhorle" path="res://breakout/assets/inima2.png" id="1_yrk2g"]
+
+[node name="Heart" type="TextureRect" unique_id=857680995]
+custom_minimum_size = Vector2(35, 35)
+custom_maximum_size = Vector2(35, 35)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_yrk2g")

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bdnb6cmftj1pv"]
+
+[ext_resource type="Script" uid="uid://hww6y7h0h0xt" path="res://breakout/scenes/h_box_container.gd" id="1_hfj38"]
+
+[node name="LifeCounter" type="CanvasLayer" unique_id=242977888]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=912324275]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hfj38")
