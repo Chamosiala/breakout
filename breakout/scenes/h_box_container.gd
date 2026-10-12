@@ -3,9 +3,14 @@ extends HBoxContainer
 const HEART = preload("uid://dtw8qxrhusfaa")
 const GAME = preload("uid://ke2hp3sfwf4")
 
+signal died
+
 func update_lives(lives: int) -> void:
 	for i in range(get_child_count()):
-		get_child(i).visible = i < lives - 1
+		get_child(i).visible = i < lives
+	if lives == 0:
+		print("you died")
+		died.emit()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

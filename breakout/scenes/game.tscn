@@ -3,13 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://idqg1t52of46" path="res://breakout/scenes/player.tscn" id="1_jtfpr"]
 [ext_resource type="Script" uid="uid://dlvfbarxg5hqf" path="res://breakout/scenes/game.gd" id="1_qyk80"]
 [ext_resource type="Script" uid="uid://21cbbixcydqa" path="res://breakout/scenes/player.gd" id="2_xej31"]
-[ext_resource type="PackedScene" uid="uid://c6x2ib32w3pmd" path="res://breakout/scenes/ball.tscn" id="4_qyk80"]
+[ext_resource type="Script" uid="uid://bjurnw8dmsp7u" path="res://breakout/scenes/ceiling.gd" id="4_v5mu4"]
 [ext_resource type="PackedScene" uid="uid://cw3ccjna5alap" path="res://breakout/scenes/brick_color_1.tscn" id="5_0a3k7"]
 [ext_resource type="PackedScene" uid="uid://by5fuoynjvdyx" path="res://breakout/scenes/brick_color_4.tscn" id="6_obesw"]
 [ext_resource type="Script" uid="uid://b2lynkkjrngpr" path="res://breakout/scenes/floor.gd" id="7_6yit2"]
 [ext_resource type="Script" uid="uid://hww6y7h0h0xt" path="res://breakout/scenes/h_box_container.gd" id="7_gfjrq"]
 [ext_resource type="PackedScene" uid="uid://ddat8ngxt0iwg" path="res://breakout/scenes/brick_color_2.tscn" id="7_o0vxh"]
 [ext_resource type="PackedScene" uid="uid://dpudno7ry7cak" path="res://breakout/scenes/brick_color_3.tscn" id="7_obesw"]
+[ext_resource type="Script" uid="uid://bbilyruuaerd2" path="res://breakout/scenes/high_score.gd" id="10_obesw"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4miue"]
 normal = Vector2(1, 0)
@@ -60,12 +61,10 @@ collision_layer = 3
 position = Vector2(-447, 438)
 shape = SubResource("WorldBoundaryShape2D_xej31")
 
-[node name="Ball" parent="." unique_id=401352303 instance=ExtResource("4_qyk80")]
-position = Vector2(324, 576)
-
 [node name="Ceiling" type="StaticBody2D" parent="." unique_id=574491316]
 position = Vector2(527, 0)
 collision_layer = 3
+script = ExtResource("4_v5mu4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling" unique_id=426018250]
 position = Vector2(-53, 64)
@@ -90,36 +89,36 @@ shape = SubResource("WorldBoundaryShape2D_xu7wj")
 
 [node name="Bricks" type="Node" parent="." unique_id=485881820]
 
-[node name="BrickGroup" type="Node" parent="Bricks" unique_id=719384844]
+[node name="BrickRow" type="Node" parent="Bricks" unique_id=719384844]
 
-[node name="Brick10" parent="Bricks/BrickGroup" unique_id=75532010 instance=ExtResource("6_obesw")]
+[node name="Brick10" parent="Bricks/BrickRow" unique_id=75532010 instance=ExtResource("6_obesw")]
 position = Vector2(553, 117)
 
-[node name="Brick7" parent="Bricks/BrickGroup" unique_id=1531522149 instance=ExtResource("6_obesw")]
+[node name="Brick7" parent="Bricks/BrickRow" unique_id=1531522149 instance=ExtResource("6_obesw")]
 position = Vector2(21, 117)
 
-[node name="Brick6" parent="Bricks/BrickGroup" unique_id=1622934663 instance=ExtResource("6_obesw")]
+[node name="Brick6" parent="Bricks/BrickRow" unique_id=1622934663 instance=ExtResource("6_obesw")]
 position = Vector2(249, 117)
 
-[node name="Brick" parent="Bricks/BrickGroup" unique_id=698600857 instance=ExtResource("6_obesw")]
+[node name="Brick" parent="Bricks/BrickRow" unique_id=698600857 instance=ExtResource("6_obesw")]
 position = Vector2(97, 117)
 
-[node name="Brick2" parent="Bricks/BrickGroup" unique_id=2047862111 instance=ExtResource("6_obesw")]
+[node name="Brick2" parent="Bricks/BrickRow" unique_id=2047862111 instance=ExtResource("6_obesw")]
 position = Vector2(173, 117)
 
-[node name="Brick5" parent="Bricks/BrickGroup" unique_id=1885670332 instance=ExtResource("6_obesw")]
+[node name="Brick5" parent="Bricks/BrickRow" unique_id=1885670332 instance=ExtResource("6_obesw")]
 position = Vector2(-55, 117)
 
-[node name="Brick4" parent="Bricks/BrickGroup" unique_id=16045904 instance=ExtResource("6_obesw")]
+[node name="Brick4" parent="Bricks/BrickRow" unique_id=16045904 instance=ExtResource("6_obesw")]
 position = Vector2(325, 117)
 
-[node name="Brick8" parent="Bricks/BrickGroup" unique_id=797972630 instance=ExtResource("6_obesw")]
+[node name="Brick8" parent="Bricks/BrickRow" unique_id=797972630 instance=ExtResource("6_obesw")]
 position = Vector2(401, 117)
 
-[node name="Brick9" parent="Bricks/BrickGroup" unique_id=668044216 instance=ExtResource("6_obesw")]
+[node name="Brick9" parent="Bricks/BrickRow" unique_id=668044216 instance=ExtResource("6_obesw")]
 position = Vector2(477, 117)
 
-[node name="Brick11" parent="Bricks/BrickGroup" unique_id=1306303006 instance=ExtResource("6_obesw")]
+[node name="Brick11" parent="Bricks/BrickRow" unique_id=1306303006 instance=ExtResource("6_obesw")]
 position = Vector2(629, 117)
 
 [node name="BrickGroup2" type="Node" parent="Bricks" unique_id=1034487508]
@@ -362,6 +361,14 @@ offset_bottom = -15.0
 grow_horizontal = 0
 script = ExtResource("7_gfjrq")
 
-[connection signal="brick_broken" from="Ball" to="." method="_on_ball_brick_broken"]
+[node name="HighScore" type="Label" parent="." unique_id=234818129]
+offset_left = 285.0
+offset_top = 528.0
+offset_right = 325.0
+offset_bottom = 551.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+script = ExtResource("10_obesw")
+
 [connection signal="ball_lost" from="Floor" to="." method="_on_floor_ball_lost"]
 [connection signal="body_entered" from="Floor" to="Floor" method="_on_body_entered"]
+[connection signal="died" from="LifeCounter/HBoxContainer" to="." method="_on_h_box_container_died"]
