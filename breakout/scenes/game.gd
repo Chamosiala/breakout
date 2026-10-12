@@ -2,6 +2,7 @@ extends Node2D
 @onready var score_label: Label = $Score_Label
 const BALL = preload("uid://c6x2ib32w3pmd")
 @onready var h_box_container: HBoxContainer = $LifeCounter/HBoxContainer
+@onready var player: CharacterBody2D = $Player
 
 # caps because you shout when you say it
 var SCORE = 0
@@ -22,6 +23,7 @@ func _process(_delta: float) -> void:
 		get_tree().reload_current_scene()
 	if Input.is_action_just_pressed("play") && GAME_STATE != "game_over":
 		GAME_STATE = "playing"
+		player.scale.y = 1
 		if !get_tree().root.get_child(0).has_node('Ball'):
 			instantiate_ball()
 	

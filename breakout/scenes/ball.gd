@@ -27,8 +27,8 @@ func _on_body_entered(body: Node) -> void:
 		#TODO: do better next time
 		linear_velocity.y = - abs(linear_velocity.y)
 	if body.name == "Ceiling":
-		if player.scale.x > 0.10:
-			player.scale.x -= 0.10
+		if player.scale.y > 0.10:
+			player.scale.y -= 0.10
 	linear_velocity *= 1.05
 	if abs(linear_velocity.x) > max_x_speed:
 		linear_velocity.x = sign(linear_velocity.x) * max_x_speed
