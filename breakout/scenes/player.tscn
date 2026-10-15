@@ -14,12 +14,5 @@ rotation = 1.5707964
 texture = ExtResource("1_vfcb7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2139604535]
-position = Vector2(0, -0.25)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_vfcb7")
-
-[node name="ColorRect" type="ColorRect" parent="." unique_id=298864087]
-visible = false
-offset_left = -9.0
-offset_top = -60.0
-offset_right = 9.0
-offset_bottom = 60.0

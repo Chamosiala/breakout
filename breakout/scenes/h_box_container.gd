@@ -1,5 +1,5 @@
 extends HBoxContainer
-@onready var game: Node2D = $"../../"
+@onready var game: Node2D = $"../"
 const HEART = preload("uid://dtw8qxrhusfaa")
 const GAME = preload("uid://ke2hp3sfwf4")
 

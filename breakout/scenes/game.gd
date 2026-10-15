@@ -1,7 +1,7 @@
 extends Node2D
 @onready var score_label: Label = $Score_Label
 const BALL = preload("uid://c6x2ib32w3pmd")
-@onready var h_box_container: HBoxContainer = $LifeCounter/HBoxContainer
+@onready var h_box_container: HBoxContainer = $HBoxContainer
 @onready var player: CharacterBody2D = $Player
 
 # caps because you shout when you say it
@@ -37,7 +37,6 @@ func end_game():
 
 func _on_ball_brick_broken() -> void:
 	SCORE += 1
-	print(SCORE)
 	score_label.text = str(SCORE)
 
 func _on_floor_ball_lost() -> void:
