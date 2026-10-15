@@ -48,7 +48,7 @@ func _on_floor_ball_lost() -> void:
 	#RESET paddle size
 		
 func load_game():
-	if not FileAccess.file_exists("res://savegame.save"):
+	if not FileAccess.file_exists("user://savegame.save"):
 		return # Error! We don't have a save to load.
 
 	# We need to revert the game state so we're not cloning objects
@@ -60,7 +60,7 @@ func load_game():
 
 	# Load the file line by line and process that dictionary to restore
 	# the object it represents.
-	var save_file = FileAccess.open("res://savegame.save", FileAccess.READ)
+	var save_file = FileAccess.open("user://savegame.save", FileAccess.READ)
 	while save_file.get_position() < save_file.get_length():
 		var json_string = save_file.get_line()
 
@@ -92,7 +92,7 @@ func load_game():
 			#new_object.set(i, node_data[i])
 
 func save_game():
-	var save_file = FileAccess.open("res://savegame.save", FileAccess.WRITE)
+	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
 	var node_data = {
 		"high_score": HIGH_SCORE
 	}
