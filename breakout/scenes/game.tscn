@@ -108,6 +108,3 @@ script = ExtResource("10_obesw")
 [connection signal="died" from="HBoxContainer" to="." method="_on_h_box_container_died"]
 [connection signal="ball_lost" from="Floor" to="." method="_on_floor_ball_lost"]
 [connection signal="body_entered" from="Floor" to="Floor" method="_on_body_entered"]
-
-[node name="Bricks" parent="." unique_id=1898000179 instance=ExtResource("6_gfjrq")]
-[node name="Bricks" parent="." unique_id=1898000179 instance=ExtResource("6_gfjrq")]
