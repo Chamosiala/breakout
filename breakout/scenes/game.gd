@@ -15,6 +15,7 @@ var BEAT_HIGH_SCORE = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	load_game()
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	score_label.text = str(SCORE)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

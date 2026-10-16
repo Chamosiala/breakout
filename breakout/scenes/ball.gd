@@ -6,6 +6,8 @@ const initial_speed = 500
 
 var max_x_speed = initial_speed 
 var max_y_speed = initial_speed 
+
+var has_hit_ceiling_after_paddle_hit = false
 signal brick_broken
 
 # Called when the node enters the scene tree for the first time.
@@ -22,6 +24,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	var obj = state.get_contact_collider_object(0)
 	if obj != null:
 		if obj.name == "Player":
+			has_hit_ceiling_after_paddle_hit = false
 			var shape :RectangleShape2D = obj.get_node("CollisionShape2D").shape
 			print(shape.size.y)
 			
@@ -40,8 +43,9 @@ func _on_body_entered(body: Node) -> void:
 			speed_change()
 			brick_broken.emit()
 	if body.name == "Ceiling":
-		if player.scale.y > 0.10:
+		if player.scale.y && !has_hit_ceiling_after_paddle_hit > 0.30:
 			player.scale.y -= 0.10
+		has_hit_ceiling_after_paddle_hit = true
 	linear_velocity *= 1.05
 	if abs(linear_velocity.x) > max_x_speed:
 		linear_velocity.x = sign(linear_velocity.x) * max_x_speed

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cvdpbr4wr383m" path="res://breakout/assets/paleta.png" id="1_vfcb7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vfcb7"]
-size = Vector2(18, 120.5)
+size = Vector2(18, 120.25)
 
 [node name="Player" type="CharacterBody2D" unique_id=99828147]
 disable_mode = 1
@@ -14,5 +14,5 @@ rotation = 1.5707964
 texture = ExtResource("1_vfcb7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2139604535]
-position = Vector2(0, 1)
+position = Vector2(0, -0.125)
 shape = SubResource("RectangleShape2D_vfcb7")
