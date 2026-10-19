@@ -57,6 +57,7 @@ func _on_body_entered(body: Node) -> void:
 		linear_velocity.y = sign(linear_velocity.y) * max_y_speed
 		
 func break_brick(body: Node2D):
+	brick_broken.emit()
 	brick_break.play()
 	speed_change()
 	body.get_node("CollisionShape2D").queue_free()
