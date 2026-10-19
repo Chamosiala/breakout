@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bmrd4i68kcyb2" path="res://breakout/scenes/bricks.tscn" id="6_gfjrq"]
 [ext_resource type="Script" uid="uid://b2lynkkjrngpr" path="res://breakout/scenes/floor.gd" id="7_6yit2"]
 [ext_resource type="Script" uid="uid://hww6y7h0h0xt" path="res://breakout/scenes/h_box_container.gd" id="7_gfjrq"]
+[ext_resource type="Script" uid="uid://eg46gi5p1fq3" path="res://breakout/scenes/combo.gd" id="9_o0vxh"]
 [ext_resource type="Script" uid="uid://bbilyruuaerd2" path="res://breakout/scenes/high_score.gd" id="10_obesw"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4miue"]
@@ -104,6 +105,18 @@ offset_right = 325.0
 offset_bottom = 551.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 script = ExtResource("10_obesw")
+
+[node name="Combo" type="Label" parent="." unique_id=231362103]
+visible = false
+offset_left = -54.0
+offset_top = 901.0
+offset_right = 60.0
+offset_bottom = 943.0
+offset_transform_enabled = true
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "COMBO"
+script = ExtResource("9_o0vxh")
 
 [connection signal="died" from="HBoxContainer" to="." method="_on_h_box_container_died"]
 [connection signal="ball_lost" from="Floor" to="." method="_on_floor_ball_lost"]

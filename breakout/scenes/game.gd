@@ -3,6 +3,7 @@ extends Node2D
 const BALL = preload("uid://c6x2ib32w3pmd")
 @onready var h_box_container: HBoxContainer = $HBoxContainer
 @onready var player: CharacterBody2D = $Player
+@onready var combo_label: Label = $Combo
 
 # caps because you shout when you say it
 var SCORE = 0
@@ -11,6 +12,7 @@ var LIVES = 3
 var MAX_LIVES = 3
 var GAME_STATE = "begin" # "begin" || "playing" || "game_over"
 var BEAT_HIGH_SCORE = false
+var COMBO = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -39,6 +41,10 @@ func end_game():
 func _on_ball_brick_broken() -> void:
 	SCORE += 1
 	score_label.text = str(SCORE)
+	update_combo(COMBO + 1)
+	
+func _on_paddle_hit() -> void:
+	update_combo(0)
 
 func _on_floor_ball_lost() -> void:
 	LIVES -= 1
@@ -108,3 +114,9 @@ func instantiate_ball():
 	var ball : PhysicsBody2D = BALL.instantiate()
 	add_child(ball)
 	ball.brick_broken.connect(_on_ball_brick_broken)
+	ball.paddle_hit.connect(_on_paddle_hit)
+
+func update_combo(combo):
+	COMBO = combo
+	combo_label.visible = true if COMBO >= 2 else false
+	combo_label.text = "COMBO" + " " + str(COMBO)

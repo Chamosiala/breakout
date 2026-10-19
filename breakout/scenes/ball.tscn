@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://canh22kccf2s1" path="res://breakout/scenes/ball.gd" id="1_f5kf5"]
 [ext_resource type="Texture2D" uid="uid://crya33n0wdqgw" path="res://breakout/assets/minge.png" id="2_f5kf5"]
+[ext_resource type="AudioStream" uid="uid://bdt4if88262u0" path="res://breakout/assets/Hit_02.wav" id="3_tdsie"]
+[ext_resource type="AudioStream" uid="uid://ck7ky347c80ok" path="res://breakout/assets/Shoot_01.wav" id="4_xbisi"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1lldk"]
 friction = 0.0
@@ -34,5 +36,12 @@ texture = ExtResource("2_f5kf5")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1101204398]
 scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_4miue")
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="." unique_id=469417145]
+stream = ExtResource("3_tdsie")
+pitch_scale = 2.01
+
+[node name="BrickBreak" type="AudioStreamPlayer2D" parent="." unique_id=1969511881]
+stream = ExtResource("4_xbisi")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

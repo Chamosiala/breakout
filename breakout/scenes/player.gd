@@ -9,3 +9,7 @@ func _physics_process(delta: float) -> void:
 	position.x = get_viewport().get_mouse_position().x - sprite.texture.get_size().x / 2
 
 	move_and_slide()
+
+func shrink_player():
+	if scale.y > 0.50:
+		scale.y -= 0.10

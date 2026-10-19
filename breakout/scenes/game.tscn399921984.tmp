@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://ke2hp3sfwf4"]
+
+[ext_resource type="PackedScene" uid="uid://idqg1t52of46" path="res://breakout/scenes/player.tscn" id="1_jtfpr"]
+[ext_resource type="Script" uid="uid://dlvfbarxg5hqf" path="res://breakout/scenes/game.gd" id="1_qyk80"]
+[ext_resource type="Script" uid="uid://21cbbixcydqa" path="res://breakout/scenes/player.gd" id="2_xej31"]
+[ext_resource type="Script" uid="uid://bjurnw8dmsp7u" path="res://breakout/scenes/ceiling.gd" id="4_v5mu4"]
+[ext_resource type="PackedScene" uid="uid://bmrd4i68kcyb2" path="res://breakout/scenes/bricks.tscn" id="6_gfjrq"]
+[ext_resource type="Script" uid="uid://b2lynkkjrngpr" path="res://breakout/scenes/floor.gd" id="7_6yit2"]
+[ext_resource type="Script" uid="uid://hww6y7h0h0xt" path="res://breakout/scenes/h_box_container.gd" id="7_gfjrq"]
+[ext_resource type="Script" uid="uid://eg46gi5p1fq3" path="res://breakout/scenes/combo.gd" id="9_o0vxh"]
+[ext_resource type="Script" uid="uid://bbilyruuaerd2" path="res://breakout/scenes/high_score.gd" id="10_obesw"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4miue"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xej31"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_byoqh"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xu7wj"]
+distance = -50.0
+
+[node name="Game" type="Node2D" unique_id=465889652]
+script = ExtResource("1_qyk80")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=912324275]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 678.0
+offset_top = 70.0
+offset_right = 678.0
+offset_bottom = 70.0
+grow_horizontal = 0
+script = ExtResource("7_gfjrq")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=618462415]
+position = Vector2(324, 576)
+
+[node name="Player" parent="." unique_id=1423294292 instance=ExtResource("1_jtfpr")]
+position = Vector2(324, 1048)
+rotation = -1.5707964
+script = ExtResource("2_xej31")
+
+[node name="Background" type="ColorRect" parent="." unique_id=280665718]
+z_index = -1
+offset_left = -57.20512
+offset_top = 1088.3578
+offset_right = 967.113
+offset_bottom = 1850.3674
+rotation = -1.5707964
+offset_transform_rotation = -1.5707964
+color = Color(1, 0.9372549, 0.68235296, 1)
+
+[node name="WallLeft" type="StaticBody2D" parent="." unique_id=328722542]
+position = Vector2(20, 68)
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft" unique_id=1405081623]
+position = Vector2(-77, 245)
+shape = SubResource("WorldBoundaryShape2D_4miue")
+
+[node name="WallRight" type="StaticBody2D" parent="." unique_id=833088702]
+position = Vector2(1152, 121)
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight" unique_id=341994762]
+position = Vector2(-447, 438)
+shape = SubResource("WorldBoundaryShape2D_xej31")
+
+[node name="Ceiling" type="StaticBody2D" parent="." unique_id=574491316]
+position = Vector2(527, 0)
+collision_layer = 3
+script = ExtResource("4_v5mu4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling" unique_id=426018250]
+position = Vector2(-53, 64)
+shape = SubResource("WorldBoundaryShape2D_byoqh")
+
+[node name="Score_Label" type="Label" parent="." unique_id=1045275232]
+offset_left = -55.0
+offset_top = 64.0
+offset_right = 100.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Start"
+
+[node name="Floor" type="Area2D" parent="." unique_id=259183223]
+position = Vector2(321, 1084)
+script = ExtResource("7_6yit2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=359230225]
+position = Vector2(1, -2)
+shape = SubResource("WorldBoundaryShape2D_xu7wj")
+
+[node name="Bricks" parent="." unique_id=1898000179 instance=ExtResource("6_gfjrq")]
+
+[node name="HighScore" type="Label" parent="." unique_id=234818129]
+offset_left = 285.0
+offset_top = 528.0
+offset_right = 325.0
+offset_bottom = 551.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+script = ExtResource("10_obesw")
+
+[node name="Combo" type="Label" parent="." unique_id=231362103]
+visible = false
+offset_left = -54.0
+offset_top = 901.0
+offset_right = 60.0
+offset_bottom = 943.0
+offset_transform_enabled = true
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "COMBO"
+script = ExtResource("9_o0vxh")
+
+[connection signal="died" from="HBoxContainer" to="." method="_on_h_box_container_died"]
+[connection signal="ball_lost" from="Floor" to="." method="_on_floor_ball_lost"]
+[connection signal="body_entered" from="Floor" to="Floor" method="_on_body_entered"]
