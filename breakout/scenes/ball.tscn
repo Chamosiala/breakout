@@ -13,6 +13,7 @@ radius = 15.0
 
 [node name="Ball" type="RigidBody2D" unique_id=401352303]
 z_index = 999
+position = Vector2(339, 655)
 physics_material_override = SubResource("PhysicsMaterial_1lldk")
 gravity_scale = 0.0
 continuous_cd = 2

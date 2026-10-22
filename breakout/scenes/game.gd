@@ -24,19 +24,19 @@ var noteArray : Array[AudioStreamPlayer2D] = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	load_game()
+	instantiate_ball()
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	score_label.text = str(SCORE)
 	noteArray = [a_5, c_5, d_5, e_5, g_5]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if Input.is_action_pressed("Reset"):
+	if Input.is_action_pressed("Reset") && LIVES != MAX_LIVES:
 		get_tree().reload_current_scene()
 	if Input.is_action_just_pressed("play") && GAME_STATE != "game_over":
+		print("yes")
 		GAME_STATE = "playing"
-		player.scale.y = 1
-		if !get_tree().root.get_child(0).has_node('Ball'):
-			instantiate_ball()
+		#player.scale.y = 1
 	
 		
 func end_game():
@@ -60,6 +60,7 @@ func _on_floor_ball_lost() -> void:
 	h_box_container.update_lives(LIVES)
 	if LIVES > 0:
 		GAME_STATE = "begin"
+		instantiate_ball()
 		
 func load_game():
 	if not FileAccess.file_exists("user://savegame.save"):

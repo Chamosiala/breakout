@@ -21,9 +21,10 @@ var randomPos = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void: # to change this to stick to paddle
+	freeze = true
 	has_hit_ceiling_after_paddle_hit = false
 	linear_velocity = Vector2()
-	randomPos = randi_range(-20, 20)
+	randomPos = randi_range(-10, 10)
 	position = Vector2(player.position.x + randomPos, player.position.y - 16)
 
 func speed_change() -> void:
@@ -31,27 +32,23 @@ func speed_change() -> void:
 		max_x_speed *= 1.05
 		max_y_speed *= 1.05
 		
+func _physics_process(_delta: float):
+	if freeze:
+		global_position = Vector2(player.global_position.x + randomPos, player.global_position.y - 15)
+		if Input.is_action_just_pressed("play"):
+			freeze = false
+			apply_central_impulse(Vector2(initial_speed, initial_speed))
+
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	if Input.is_action_just_pressed("play") and currentState == "sticky":
-		position = Vector2(position.x, position.y - 20)
-		linear_velocity = Vector2(initial_speed, initial_speed).rotated(deg_to_rad(randi_range(-40, 40)))
-		currentState = "bounce"
-	else:
-		var pos = state.get_contact_collider_position(0) # ball
-		var obj = state.get_contact_collider_object(0)
-		if obj != null:
-			if obj.name == "Player":
-				if currentState == "bounce":
-					print("cringeeee")
-					paddle_hit.emit()
-					has_hit_ceiling_after_paddle_hit = false
-					var relative : float = pos.x - player.position.x
-					var speed := state.linear_velocity.length()
-					state.linear_velocity = Vector2.RIGHT.rotated(-funky_trans_moment(relative)) * speed
-				else:
-					state.linear_velocity = Vector2()
-					position = Vector2(player.position.x + randomPos, player.position.y - 16)
-				
+	var pos = state.get_contact_collider_position(0) # ball
+	var obj = state.get_contact_collider_object(0)
+	if obj != null:
+		if obj.name == "Player":
+				paddle_hit.emit()
+				has_hit_ceiling_after_paddle_hit = false
+				var relative : float = pos.x - player.position.x
+				var speed := state.linear_velocity.length()
+				state.linear_velocity = Vector2.RIGHT.rotated(-funky_trans_moment(relative)) * speed
 
 func hit_stop(duration: float = 0.03, time_scale_value: float = 0.03) -> void:
 	Engine.time_scale = time_scale_value
@@ -61,12 +58,14 @@ func hit_stop(duration: float = 0.03, time_scale_value: float = 0.03) -> void:
 			
 func funky_trans_moment(x):
 	return PI/2 - x * PI/240
+
 func _on_body_entered(body: Node) -> void:
 	hit_stop()
 	print(linear_velocity.length())
 	hit_sound.pitch_scale = max_y_speed / 500
 	print(hit_sound.pitch_scale)
-	hit_sound.play()
+	if !freeze:
+		hit_sound.play()
 	for brickGroup in bricks.get_children():
 		if body in brickGroup.get_children():
 			break_brick(body)
