@@ -5,6 +5,12 @@ const BALL = preload("uid://c6x2ib32w3pmd")
 @onready var player: CharacterBody2D = $Player
 @onready var combo_label: Label = $Combo
 
+@onready var a_5: AudioStreamPlayer2D = $A5
+@onready var c_5: AudioStreamPlayer2D = $C5
+@onready var e_5: AudioStreamPlayer2D = $E5
+@onready var g_5: AudioStreamPlayer2D = $G5
+@onready var d_5: AudioStreamPlayer2D = $D5
+
 # caps because you shout when you say it
 var SCORE = 0
 var HIGH_SCORE = 0
@@ -13,12 +19,14 @@ var MAX_LIVES = 3
 var GAME_STATE = "begin" # "begin" || "playing" || "game_over"
 var BEAT_HIGH_SCORE = false
 var COMBO = 0
+var noteArray : Array[AudioStreamPlayer2D] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	load_game()
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	score_label.text = str(SCORE)
+	noteArray = [a_5, c_5, d_5, e_5, g_5]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -41,6 +49,7 @@ func end_game():
 func _on_ball_brick_broken() -> void:
 	SCORE += 1
 	score_label.text = str(SCORE)
+	noteArray[COMBO%5].play()
 	update_combo(COMBO + 1)
 	
 func _on_paddle_hit() -> void:
@@ -51,7 +60,6 @@ func _on_floor_ball_lost() -> void:
 	h_box_container.update_lives(LIVES)
 	if LIVES > 0:
 		GAME_STATE = "begin"
-	#RESET paddle size
 		
 func load_game():
 	if not FileAccess.file_exists("user://savegame.save"):
