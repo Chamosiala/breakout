@@ -50,6 +50,7 @@ func end_game():
 	
 func win_game():
 	update_high_score()
+	#TODO: delete ball here
 	GAME_STATE = "game_won"
 
 func _on_ball_brick_broken() -> void:
