@@ -4,7 +4,7 @@ const BALL = preload("uid://c6x2ib32w3pmd")
 @onready var h_box_container: HBoxContainer = $HBoxContainer
 @onready var player: CharacterBody2D = $Player
 @onready var combo_label: Label = $Combo
-
+@onready var bricks: Node = $Bricks
 @onready var a_5: AudioStreamPlayer2D = $A5
 @onready var c_5: AudioStreamPlayer2D = $C5
 @onready var e_5: AudioStreamPlayer2D = $E5
@@ -38,19 +38,27 @@ func _process(_delta: float) -> void:
 		GAME_STATE = "playing"
 		#player.scale.y = 1
 	
-		
-func end_game():
+func update_high_score():
 	if SCORE > HIGH_SCORE:
 		HIGH_SCORE = SCORE
 		BEAT_HIGH_SCORE = true
 		save_game()
+		
+func end_game():
+	update_high_score()
 	GAME_STATE = "game_over"
+	
+func win_game():
+	update_high_score()
+	GAME_STATE = "game_won"
 
 func _on_ball_brick_broken() -> void:
 	SCORE += 1
 	score_label.text = str(SCORE)
 	noteArray[COMBO%5].play()
 	update_combo(COMBO + 1)
+	if bricks.get_children().size() == 0:
+		win_game()
 	
 func _on_paddle_hit() -> void:
 	update_combo(0)
@@ -59,7 +67,7 @@ func _on_floor_ball_lost() -> void:
 	LIVES -= 1
 	h_box_container.update_lives(LIVES)
 	if LIVES > 0:
-		GAME_STATE = "begin"
+		#GAME_STATE = "begin"
 		instantiate_ball()
 		
 func load_game():

@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://b2lynkkjrngpr" path="res://breakout/scenes/floor.gd" id="7_6yit2"]
 [ext_resource type="Script" uid="uid://hww6y7h0h0xt" path="res://breakout/scenes/h_box_container.gd" id="7_gfjrq"]
 [ext_resource type="Script" uid="uid://eg46gi5p1fq3" path="res://breakout/scenes/combo.gd" id="9_o0vxh"]
-[ext_resource type="Script" uid="uid://bbilyruuaerd2" path="res://breakout/scenes/high_score.gd" id="10_obesw"]
+[ext_resource type="Script" uid="uid://bbilyruuaerd2" path="res://breakout/scenes/info_label.gd" id="10_obesw"]
 [ext_resource type="AudioStream" uid="uid://cey2g1p0t0u12" path="res://breakout/assets/notes/a5.mp3" id="10_v5mu4"]
 [ext_resource type="AudioStream" uid="uid://8pvrcq4bjbx6" path="res://breakout/assets/notes/c5.mp3" id="11_cawnc"]
 [ext_resource type="AudioStream" uid="uid://bsj201fmnt86w" path="res://breakout/assets/notes/d5.mp3" id="12_mkg1q"]
@@ -103,12 +103,17 @@ shape = SubResource("WorldBoundaryShape2D_xu7wj")
 
 [node name="Bricks" parent="." unique_id=1898000179 instance=ExtResource("6_gfjrq")]
 
-[node name="HighScore" type="Label" parent="." unique_id=234818129]
-offset_left = 285.0
-offset_top = 528.0
-offset_right = 325.0
-offset_bottom = 551.0
+[node name="InfoLabel" type="Label" parent="." unique_id=234818129]
+custom_minimum_size = Vector2(430, 0)
+offset_left = 106.0
+offset_top = 559.0
+offset_right = 539.0
+offset_bottom = 658.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "aaaaaaaaaaaaaaaaaaaaaaaaa"
+horizontal_alignment = 1
+autowrap_mode = 2
 script = ExtResource("10_obesw")
 
 [node name="Combo" type="Label" parent="." unique_id=231362103]
