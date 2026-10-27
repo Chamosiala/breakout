@@ -58,6 +58,7 @@ func _on_ball_brick_broken() -> void:
 	score_label.text = str(SCORE)
 	noteArray[COMBO%5].play()
 	update_combo(COMBO + 1)
+	#TODO: this doesn't work actually it's always 8 (expected it to be 80):
 	if bricks.get_children().size() == 0:
 		win_game()
 	
