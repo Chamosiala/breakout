@@ -93,7 +93,7 @@ func break_brick(body: Node2D):
 	breakAnimation.play("break")
 	await breakAnimation.animation_finished
 	body.queue_free()
-	
+	await tree_exited
 
 
 func _on_disable_collision_timeout() -> void:

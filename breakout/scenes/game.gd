@@ -10,6 +10,7 @@ const BALL = preload("uid://c6x2ib32w3pmd")
 @onready var e_5: AudioStreamPlayer2D = $E5
 @onready var g_5: AudioStreamPlayer2D = $G5
 @onready var d_5: AudioStreamPlayer2D = $D5
+@onready var game_win_music: AudioStreamPlayer2D = $GameWinMusic
 
 # caps because you shout when you say it
 var SCORE = 0
@@ -19,7 +20,9 @@ var MAX_LIVES = 3
 var GAME_STATE = "begin" # "begin" || "playing" || "game_over"
 var BEAT_HIGH_SCORE = false
 var COMBO = 0
+var REMAINING_BRICKS = 0
 var noteArray : Array[AudioStreamPlayer2D] = []
+var current_ball: Node2D = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,12 +31,18 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	score_label.text = str(SCORE)
 	noteArray = [a_5, c_5, d_5, e_5, g_5]
+	var brick_rows = bricks.get_children()
+	for brick_row in brick_rows:
+		for brick in brick_row.get_children():
+			REMAINING_BRICKS += 1
+	print(REMAINING_BRICKS)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if Input.is_action_pressed("Reset") && LIVES != MAX_LIVES:
+	
+	if Input.is_action_just_released("Reset"):
 		get_tree().reload_current_scene()
-	if Input.is_action_just_pressed("play") && GAME_STATE != "game_over":
+	if Input.is_action_just_pressed("play") && GAME_STATE != "game_over" && GAME_STATE != "game_won":
 		GAME_STATE = "playing"
 		#player.scale.y = 1
 	
@@ -48,22 +57,21 @@ func end_game():
 	GAME_STATE = "game_over"
 	
 func win_game():
+	game_win_music.play()
 	update_high_score()
-	#TODO: delete ball here
+	current_ball.queue_free()
+	Engine.time_scale = 1.0
 	GAME_STATE = "game_won"
 
 func _on_ball_brick_broken() -> void:
+	REMAINING_BRICKS -= 1
 	SCORE += 1
 	score_label.text = str(SCORE)
 	noteArray[COMBO%5].play()
 	update_combo(COMBO + 1)
-	#TODO: this doesn't work actually it's always 8 (expected it to be 80):
-	print(bricks.get_children().size())
-	var brick_rows = bricks.get_children()
-	for brick_row in brick_rows:
-		if(brick_row.get_child_count()):
-			return
-	win_game()
+	print(REMAINING_BRICKS)
+	if REMAINING_BRICKS == 0:
+		win_game()
 	
 func _on_paddle_hit() -> void:
 	update_combo(0)
@@ -134,6 +142,7 @@ func _on_h_box_container_died() -> void:
 	
 func instantiate_ball():
 	var ball : PhysicsBody2D = BALL.instantiate()
+	current_ball = ball
 	add_child(ball)
 	ball.brick_broken.connect(_on_ball_brick_broken)
 	ball.paddle_hit.connect(_on_paddle_hit)

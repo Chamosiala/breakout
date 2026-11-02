@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://bsj201fmnt86w" path="res://breakout/assets/notes/d5.mp3" id="12_mkg1q"]
 [ext_resource type="AudioStream" uid="uid://bqoexociphq28" path="res://breakout/assets/notes/e5.mp3" id="13_ap2o1"]
 [ext_resource type="AudioStream" uid="uid://cvlor22au50g6" path="res://breakout/assets/notes/g5.mp3" id="14_8avru"]
+[ext_resource type="AudioStream" uid="uid://nilga2tbuxv2" path="res://breakout/assets/freesound_community-happy-14585.mp3" id="15_mkg1q"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4miue"]
 normal = Vector2(1, 0)
@@ -111,7 +112,6 @@ offset_right = 539.0
 offset_bottom = 658.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
-text = "placeholder"
 horizontal_alignment = 1
 autowrap_mode = 2
 script = ExtResource("10_obesw")
@@ -147,6 +147,9 @@ volume_db = 24.0
 [node name="G5" type="AudioStreamPlayer2D" parent="." unique_id=385300365]
 stream = ExtResource("14_8avru")
 volume_db = 24.0
+
+[node name="GameWinMusic" type="AudioStreamPlayer2D" parent="." unique_id=580065928]
+stream = ExtResource("15_mkg1q")
 
 [connection signal="died" from="HBoxContainer" to="." method="_on_h_box_container_died"]
 [connection signal="ball_lost" from="Floor" to="." method="_on_floor_ball_lost"]
