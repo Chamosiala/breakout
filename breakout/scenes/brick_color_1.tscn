@@ -43,6 +43,7 @@ _data = {
 }
 
 [node name="BrickColor1" type="StaticBody2D" unique_id=1542892490]
+collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_xu7wj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1835538794]

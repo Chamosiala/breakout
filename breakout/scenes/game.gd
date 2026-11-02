@@ -34,7 +34,6 @@ func _process(_delta: float) -> void:
 	if Input.is_action_pressed("Reset") && LIVES != MAX_LIVES:
 		get_tree().reload_current_scene()
 	if Input.is_action_just_pressed("play") && GAME_STATE != "game_over":
-		print("yes")
 		GAME_STATE = "playing"
 		#player.scale.y = 1
 	
@@ -59,8 +58,12 @@ func _on_ball_brick_broken() -> void:
 	noteArray[COMBO%5].play()
 	update_combo(COMBO + 1)
 	#TODO: this doesn't work actually it's always 8 (expected it to be 80):
-	if bricks.get_children().size() == 0:
-		win_game()
+	print(bricks.get_children().size())
+	var brick_rows = bricks.get_children()
+	for brick_row in brick_rows:
+		if(brick_row.get_child_count()):
+			return
+	win_game()
 	
 func _on_paddle_hit() -> void:
 	update_combo(0)
