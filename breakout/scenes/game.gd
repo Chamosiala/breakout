@@ -35,7 +35,6 @@ func _ready() -> void:
 	for brick_row in brick_rows:
 		for brick in brick_row.get_children():
 			REMAINING_BRICKS += 1
-	print(REMAINING_BRICKS)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -69,7 +68,6 @@ func _on_ball_brick_broken() -> void:
 	score_label.text = str(SCORE)
 	noteArray[COMBO%5].play()
 	update_combo(COMBO + 1)
-	print(REMAINING_BRICKS)
 	if REMAINING_BRICKS == 0:
 		win_game()
 	
@@ -115,7 +113,6 @@ func load_game():
 		var high_score = node_data.high_score
 		HIGH_SCORE = high_score
 		
-		#print(high_score)
 		# Firstly, we need to create the object and add it to the tree and set its position.
 		#var new_object = load(node_data["filename"]).instantiate()
 		#get_node(node_data["parent"]).add_child(new_object)
@@ -133,7 +130,6 @@ func save_game():
 		"high_score": HIGH_SCORE
 	}
 	var json_string = JSON.stringify(node_data)
-	print(save_file)
 	save_file.store_line(json_string)
 
 
